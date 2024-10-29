@@ -14,6 +14,9 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
+    @Builder.Default
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }

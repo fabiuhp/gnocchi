@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class InMemoryUserRepository implements UserRepository {
@@ -23,5 +24,12 @@ public class InMemoryUserRepository implements UserRepository {
     public User createUser(User user) {
         users.add(user);
         return user;
+    }
+
+    @Override
+    public Optional<User> findById(UUID id) {
+        return users.stream()
+                .filter(user -> user.getId().equals(id))
+                .findAny();
     }
 }

@@ -3,7 +3,9 @@ package br.com.fabiopereira.gnocchi.service.impl;
 import br.com.fabiopereira.gnocchi.domain.User;
 import br.com.fabiopereira.gnocchi.repository.impl.InMemoryUserRepository;
 import br.com.fabiopereira.gnocchi.service.dto.CreateUserCommand;
+import br.com.fabiopereira.gnocchi.service.dto.UserDto;
 import br.com.fabiopereira.gnocchi.service.exceptions.EmailJaExisteException;
+import br.com.fabiopereira.gnocchi.service.exceptions.UserNotFoundException;
 import br.com.fabiopereira.gnocchi.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,5 +38,19 @@ public class UserServiceImpl implements UserService {
         repository.createUser(user);
 
         return user.getId();
+    }
+
+    @Override
+    public UserDto getUserById(UUID id) {
+        var user = repository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
     }
 }

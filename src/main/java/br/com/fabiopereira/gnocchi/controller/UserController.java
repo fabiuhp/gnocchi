@@ -39,12 +39,13 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<GetUserByIdResponse> getUserById(@PathVariable UUID id) {
         var user = service.getUserById(id);
+        System.out.println(user.id());
         var response = new GetUserByIdResponse(
                 user.id(),
                 user.name(),
                 user.email(),
-                user.createdAt(),
-                user.updatedAt()
+                user.createdAt().toString(),
+                user.updatedAt().toString()
         );
         return ResponseEntity.ok(response);
     }
