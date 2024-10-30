@@ -33,7 +33,7 @@ public class UserController {
 
         UUID userId = service.createUser(command);
 
-        return ResponseEntity.ok(new CreateUserResponse(UUID.randomUUID()));
+        return ResponseEntity.ok(new CreateUserResponse(userId));
     }
 
     @GetMapping("{id}")
